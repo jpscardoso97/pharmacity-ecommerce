@@ -1,0 +1,94 @@
+{
+    "useCases": [
+        {
+            "name": "BrowseCatalog",
+            "nanoentitiesRead": [
+                "Catalog.name",
+                "Product.name",
+                "Product.quantity",
+                "Product.price"
+            ],
+            "nanoentitiesWritten": []
+        },
+        {
+            "name": "SearchProduct",
+            "nanoentitiesRead": [
+                ""
+            ],
+            "nanoentitiesWritten": []
+        },
+        {
+            "name": "AddToWishlist",
+            "nanoentitiesRead": [
+                ""
+            ],
+            "nanoentitiesWritten": [
+                ""
+            ]
+        },
+        {
+            "name": "AddToCart",
+            "nanoentitiesRead": [
+                ""
+            ],
+            "nanoentitiesWritten": [
+                ""
+            ]
+        },
+        {
+            "name": "ConfirmOrder",
+            "nanoentitiesRead": [
+                ""
+            ],
+            "nanoentitiesWritten": [
+                ""
+            ]
+        },
+        {
+            "name": "FulfillPrescription",
+            "nanoentitiesRead": [],
+            "nanoentitiesWritten": [
+                ""
+            ]
+        },
+        {
+            "name": "ConfigureShippingDetails",
+            "nanoentitiesRead": [],
+            "nanoentitiesWritten": [
+                ""
+            ]
+        }
+    ],
+    "compatibilities": {
+        "contentVolatility": [
+            {
+                "characteristic": "Often",
+                "nanoentities": [
+                    ""
+                ]
+            },
+            {
+                "characteristic": "Rarely",
+                "nanoentities": [
+                    ""
+                ]
+            }
+        ],
+        "structuralVolatility": [
+            {
+                "characteristic": "Rarely",
+                "nanoentities": [
+                    ""
+                ]
+            }
+        ]
+    },
+    "sharedOwnerGroups": [
+        {
+            "name": "?",
+            "nanoentities": [
+                ""
+            ]
+        }
+    ]
+}

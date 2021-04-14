@@ -1,0 +1,194 @@
+{
+    "name": "PharmaCity E-Commerce",
+    "entities": [
+        {
+            "name": "Catalog",
+            "nanoentities": [
+                "name"
+            ]
+        },
+        {
+            "name": "Inventory",
+            "nanoentities": [
+                "name"
+            ]
+        },
+        {
+            "name": "Product",
+            "nanoentities": [
+                "name",
+                "sku",
+                "description",
+                "price",
+                "quantity",
+                "color",
+                "size"
+            ]
+        },
+        {
+            "name": "Brand",
+            "nanoentities": [
+                "name",
+                "description"
+            ]
+        },
+        {
+            "name": "Category",
+            "nanoentities": [
+                "name"
+            ]
+        },
+        {
+            "name": "Promotion",
+            "nanoentities": [
+                "percentage",
+                "type"
+            ]
+        },
+        {
+            "name": "Wishlist",
+            "nanoentities": [
+                "wishlistId"
+            ]
+        },
+        {
+            "name": "Cart",
+            "nanoentities": []
+        },
+        {
+            "name": "Order",
+            "nanoentities": [
+                "value"
+            ]
+        },
+        {
+            "name": "DeliveryMethod",
+            "nanoentities": [
+                "name",
+                "cost"
+            ]
+        },
+        {
+            "name": "Prescription",
+            "nanoentities": [
+                "number",
+                "accessCode",
+                "optionCode",
+                "attachment",
+                "comments"
+            ]
+        },
+        {
+            "name": "Payment",
+            "nanoentities": [
+                "amount"
+            ]
+        },
+        {
+            "name": "PaymentType",
+            "nanoentities": [
+                "name"
+            ]
+        },
+        {
+            "name": "Customer",
+            "nanoentities": [
+                "name",
+                "email",
+                "discountCard"
+            ]
+        },
+        {
+            "name": "Address",
+            "nanoentities": [
+                "deliveryAddress",
+                "phone",
+                "postalCode",
+                "city",
+                "country"
+            ]
+        }
+    ],
+    "relations": [
+        {
+            "origin": "Catalog",
+            "destination": "Product",
+            "type": "COMPOSITION"
+        },
+        {
+            "origin": "Product",
+            "destination": "Brand",
+            "type": "AGGREGATION"
+        },
+        {
+            "origin": "Product",
+            "destination": "Category",
+            "type": "AGGREGATION"
+        },
+        {
+            "origin": "Inventory",
+            "destination": "Product",
+            "type": "COMPOSITION"
+        },
+        {
+            "origin": "Product",
+            "destination": "Promotion",
+            "type": "AGGREGATION"
+        },
+        {
+            "origin": "Wishlist",
+            "destination": "Product",
+            "type": "AGGREGATION"
+        },
+        {
+            "origin": "Customer",
+            "destination": "Wishlist",
+            "type": "COMPOSITION"
+        },
+        {
+            "origin": "Cart",
+            "destination": "Product",
+            "type": "AGGREGATION"
+        },
+        {
+            "origin": "Customer",
+            "destination": "Cart",
+            "type": "COMPOSITION"
+        },
+        {
+            "origin": "Customer",
+            "destination": "Payment",
+            "type": "COMPOSITION"
+        },
+        {
+            "origin": "Customer",
+            "destination": "Address",
+            "type": "COMPOSITION"
+        },
+        {
+            "origin": "Order",
+            "destination": "Payment",
+            "type": "COMPOSITION"
+        },
+        {
+            "origin": "Order",
+            "destination": "Address",
+            "type": "AGGREGATION"
+        },
+        {
+            "origin": "Order",
+            "destination": "DeliveryMethod",
+            "type": "AGGREGATION"
+        },
+        {
+            "origin": "Order",
+            "destination": "Prescription",
+            "type": "COMPOSITION"
+        },
+        {
+            "origin": "Payment",
+            "destination": "PaymentType",
+            "type": "AGGREGATION"
+        }
+    ]
+}
