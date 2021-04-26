@@ -13,49 +13,84 @@
         {
             "name": "SearchProduct",
             "nanoentitiesRead": [
-                ""
+                "Product.name",
+                "Product.sku",
+                "Product.description",
+                "Product.price",
+                "Product.quantity",
+                "Product.color",
+                "Product.size",
+                "Promotion.percentage"
             ],
             "nanoentitiesWritten": []
         },
         {
             "name": "AddToWishlist",
             "nanoentitiesRead": [
-                ""
+                "Customer.id",
+                "Wishlist.id"
             ],
             "nanoentitiesWritten": [
-                ""
+                "WishlistItem.productId"
             ]
         },
         {
             "name": "AddToCart",
             "nanoentitiesRead": [
-                ""
+                "Customer.id",
+                "Cart.id"
             ],
             "nanoentitiesWritten": [
-                ""
+                "CartItem.productId"
             ]
         },
         {
             "name": "ConfirmOrder",
             "nanoentitiesRead": [
-                ""
+                "Cart.id",
+                "CartItem.productId",
+                "Product.price",
+                "Promotion.percentage",
+                "DeliveryMethod.cost",
+                "PaymentType.name",
+                "Customer.id",
+                "Address.deliveryAddress"
             ],
             "nanoentitiesWritten": [
-                ""
+                "Order.value",
+                "Order.trackingId",
+                "Payment.amount"
             ]
         },
         {
             "name": "FulfillPrescription",
-            "nanoentitiesRead": [],
+            "nanoentitiesRead": [
+                "Customer.id",
+                "Customer.email",
+                "Prescription.number",
+                "Prescription.accessCode",
+                "Prescription.optionCode",
+                "Prescription.attachment",
+                "Prescription.comments",
+                "Address.deliveryAddress"
+            ],
             "nanoentitiesWritten": [
-                ""
+                "Order.value",
+                "Order.trackingId",
+                "Payment.amount"
             ]
         },
         {
             "name": "ConfigureShippingDetails",
-            "nanoentitiesRead": [],
+            "nanoentitiesRead": [
+                "Customer.id"
+            ],
             "nanoentitiesWritten": [
-                ""
+                "Address.deliveryAddress",
+                "Address.phone",
+                "Address.postalCode",
+                "Address.city",
+                "Address.country"
             ]
         }
     ],
@@ -64,13 +99,26 @@
             {
                 "characteristic": "Often",
                 "nanoentities": [
-                    ""
+                    "Product.price",
+                    "Product.quantity"
                 ]
             },
             {
                 "characteristic": "Rarely",
                 "nanoentities": [
-                    ""
+                    "Address.deliveryAddress",
+                    "Address.phone",
+                    "Address.postalCode",
+                    "Address.city",
+                    "Address.country",
+                    "Customer.id",
+                    "Customer.name",
+                    "Customer.email",
+                    "Brand.name",
+                    "Product.name",
+                    "Product.sku",
+                    "Product.color", 
+                    "Product.size"
                 ]
             }
         ],
@@ -78,17 +126,13 @@
             {
                 "characteristic": "Rarely",
                 "nanoentities": [
-                    ""
+                    "Prescription.number",
+                    "Prescription.accessCode",
+                    "Prescription.optionCode",
+                    "Prescription.attachment",
+                    "Prescription.comments"
                 ]
             }
         ]
-    },
-    "sharedOwnerGroups": [
-        {
-            "name": "?",
-            "nanoentities": [
-                ""
-            ]
-        }
-    ]
+    }
 }

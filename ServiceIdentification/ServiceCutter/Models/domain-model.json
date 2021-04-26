@@ -48,16 +48,31 @@
         {
             "name": "Wishlist",
             "nanoentities": [
-                "wishlistId"
+                "id"
+            ]
+        },
+        {
+            "name": "WishlistItem",
+            "nanoentities": [
+                "productId"
             ]
         },
         {
             "name": "Cart",
-            "nanoentities": []
+            "nanoentities": [
+                "id"
+            ]
+        },
+        {
+            "name": "CartItem",
+            "nanoentities": [
+                "productId"
+            ]
         },
         {
             "name": "Order",
             "nanoentities": [
+                "trackingId",
                 "value"
             ]
         },
@@ -93,9 +108,9 @@
         {
             "name": "Customer",
             "nanoentities": [
+                "id",
                 "name",
-                "email",
-                "discountCard"
+                "email"
             ]
         },
         {
@@ -137,6 +152,11 @@
         },
         {
             "origin": "Wishlist",
+            "destination": "WishlistItem",
+            "type": "AGGREGATION"
+        },
+        {
+            "origin": "WishlistItem",
             "destination": "Product",
             "type": "AGGREGATION"
         },
@@ -147,6 +167,11 @@
         },
         {
             "origin": "Cart",
+            "destination": "CartItem",
+            "type": "AGGREGATION"
+        },
+        {
+            "origin": "CartItem",
             "destination": "Product",
             "type": "AGGREGATION"
         },
