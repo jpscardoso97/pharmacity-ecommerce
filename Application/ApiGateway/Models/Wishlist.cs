@@ -2,8 +2,8 @@ using System.Collections.Generic;
 
 namespace ApiGateway.Models
 {
-    public class Wishlist
+    public class ishlist
     {
-        public IEnumerable<Product> Items { get; set; }
+        //public IEnumerable<Product> Items { get; set; }
     }
 }

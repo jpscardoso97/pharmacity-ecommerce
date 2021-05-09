@@ -18,6 +18,8 @@ namespace ApiGateway
 {
     public class Startup
     {
+        public const string Products = "products";
+        
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
@@ -28,13 +30,15 @@ namespace ApiGateway
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddControllers();
-            services.AddSwaggerGen(c =>
-            {
-                c.SwaggerDoc("v1", new OpenApiInfo {Title = "ApiGateway", Version = "v1"});
-            })
+            services.AddHttpClient(
+                Products, 
+                c => c.BaseAddress = new Uri("http://localhost:5001/graphql"));
+
+            services
                 .AddGraphQLServer()
-                .AddQueryType<ProductsQuery>();
+                .AddQueryType(d => d.Name("Query"))
+                .AddRemoteSchema(Products, true)
+                .AddTypeExtensionsFromFile("./Stitching.graphql");
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -43,19 +47,14 @@ namespace ApiGateway
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
-                app.UseSwagger();
-                app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "ApiGateway v1"));
             }
 
             app.UseHttpsRedirection();
 
             app.UseRouting();
 
-            app.UseAuthorization();
-
             app.UseEndpoints(endpoints =>
             {
-                endpoints.MapControllers();
                 endpoints.MapGraphQL();
             });
         }

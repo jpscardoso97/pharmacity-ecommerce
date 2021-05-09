@@ -4,6 +4,6 @@ namespace ApiGateway.Models
 {
     public class Order
     {
-        public IDictionary<Product, int> Items { get; set; }
+        //public IDictionary<Product, int> Items { get; set; }
     }
 }

@@ -1,0 +1,8 @@
+﻿extend type Query {
+  products: [Product] @delegate(schema: "products")
+  cart
+}
+
+extend type Cart {
+  items: [Product] @delegate(schema: "products", path: "products(ids: $fields:productIds)")
+}

@@ -1,14 +1,18 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.HttpsPolicy;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using ProductService.Data;
-using ProductService.Queries;
-using ProductService.Resolvers;
+using Microsoft.Extensions.Logging;
+using Microsoft.OpenApi.Models;
 
-namespace ProductService
+namespace ShoppingCartService
 {
     public class Startup
     {
@@ -21,15 +25,16 @@ namespace ProductService
 
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
-        {
+        {   
             services
                 .AddGraphQLServer()
-                .AddQueryType<ProductsQuery>();
-
+                .AddQueryType<CartQuery>();
+            
             services.AddDbContext<ApplicationDbContext>(
                 options => options.UseSqlite("Data Source=database.db"));
 
-            services.AddScoped<ProductsResolver>();
+            services.AddScoped<ModelResolver>();
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

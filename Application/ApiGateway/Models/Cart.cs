@@ -4,6 +4,6 @@ namespace ApiGateway.Models
 {
     public class Cart
     {
-        public IEnumerable<Product> Items { get; set; }
+     //   public IEnumerable<Product> Items { get; set; }
     }
 }
