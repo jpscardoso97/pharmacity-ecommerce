@@ -4,25 +4,33 @@
     using Bogus;
     using CustomerService.Data.Dto;
 
-    public class FakeCustomers
+    public static class FakeCustomers
     {
-        private static Faker<CustomerDto> _faker;
-        
-        public FakeCustomers()
+        private const int CustomerCount = 10;
+
+        private static List<string> GetRandomAddresses(Faker faker)
         {
-            _faker = new Faker<CustomerDto>()
+            var addressesCount = faker.Random.Number(1, 3);
+            var addressIds = new List<string>();
+            for (var i = 0; i < addressesCount; i++)
+            {
+                addressIds.Add(FakeAddresses.GenerateAddressId(faker.Random.Number(1, CustomerCount)));
+            }
+
+            return addressIds;
+        }
+
+        public static IEnumerable<CustomerDto> Data()
+        {
+            return new Faker<CustomerDto>()
+                .RuleFor(c => c.CustomerId, (f, c) => $"CS-{f.UniqueIndex}")
                 .RuleFor(c => c.Name, f => f.Person.FullName)
                 .RuleFor(c => c.Email, f => f.Person.Email)
                 .RuleFor(c => c.DiscountCard, f => f.Random.AlphaNumeric(5))
-                .RuleFor(c => c.DiscountCard, f => f.Random.AlphaNumeric(5))
+                .RuleFor(c => c.CartId, (f, c) => $"CRT-{f.UniqueIndex}")
+                .RuleFor(c => c.WishlistId, (f, c) => $"WL-{f.UniqueIndex}")
+                .RuleFor(c => c.Addresses, GetRandomAddresses)
+                .Generate(CustomerCount);
         }
-        public static IEnumerable<CustomerDto> Data => new List<CustomerDto>
-        {
-            new()
-            {
-                Id = 0,
-                Name = ""
-            }
-        };
     }
 }

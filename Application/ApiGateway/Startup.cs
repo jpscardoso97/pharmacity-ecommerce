@@ -19,6 +19,8 @@ namespace ApiGateway
     public class Startup
     {
         public const string Products = "products";
+        public const string Customers = "customers";
+        public const string Carts = "carts";
         
         public Startup(IConfiguration configuration)
         {
@@ -32,12 +34,20 @@ namespace ApiGateway
         {
             services.AddHttpClient(
                 Products, 
-                c => c.BaseAddress = new Uri("http://localhost:5001/graphql"));
+                c => c.BaseAddress = new Uri("https://localhost:5001/graphql"));
+            services.AddHttpClient(
+                Customers, 
+                c => c.BaseAddress = new Uri("https://localhost:5002/graphql"));
+            services.AddHttpClient(
+                Carts, 
+                c => c.BaseAddress = new Uri("https://localhost:5003/graphql"));
 
             services
                 .AddGraphQLServer()
                 .AddQueryType(d => d.Name("Query"))
                 .AddRemoteSchema(Products, true)
+                .AddRemoteSchema(Customers, true)
+                .AddRemoteSchema(Carts, true)
                 .AddTypeExtensionsFromFile("./Stitching.graphql");
         }
 

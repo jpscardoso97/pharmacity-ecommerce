@@ -1,16 +1,21 @@
-using System.Collections.Generic;
-using System.Threading.Tasks;
-using HotChocolate;
-using ProductService.Models;
-using ProductService.Resolvers;
-
-namespace ProductService.Queries
+namespace ShoppingCartService.Queries
 {
-    public class ProductsQuery
+    using System.Linq;
+    using System.Threading.Tasks;
+    using HotChocolate;
+    using ShoppingCartService.Models;
+    using ShoppingCartService.Resolvers;
+
+    public class CartQuery
     {
-        public IEnumerable<Product> GetCart([Service] CartResolver resolver)
+        public IQueryable<Cart> GetCarts([Service] CartResolver resolver)
         {
-            return resolver.Products();
+            return resolver.Carts();
+        }
+        
+        public async Task<Cart> GetCart([Service] CartResolver resolver, string cartId)
+        {
+            return await resolver.Cart(cartId);
         }
     }
 }

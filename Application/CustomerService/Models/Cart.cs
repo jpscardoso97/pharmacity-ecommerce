@@ -1,14 +1,9 @@
-namespace CustomerService.Data.Dto
+﻿namespace ShoppingCartService.Models
 {
     using System.Collections.Generic;
-    using System.ComponentModel.DataAnnotations;
-    using System.ComponentModel.DataAnnotations.Schema;
-    using MongoDB.Bson;
 
-    public class CustomerDto
+    public class Customer
     {
-        public ObjectId Id { get; set; }
-
         public string CustomerId { get; set; }
         
         public string Name { get; set; }

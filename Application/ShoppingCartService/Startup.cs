@@ -1,20 +1,16 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
-using Microsoft.OpenApi.Models;
-
 namespace ShoppingCartService
 {
-    using ProductService.Data;
+    using Microsoft.AspNetCore.Builder;
+    using Microsoft.AspNetCore.Hosting;
+    using Microsoft.Extensions.Configuration;
+    using Microsoft.Extensions.DependencyInjection;
+    using Microsoft.Extensions.Hosting;
+    using MongoDB.Bson;
+    using MongoDB.Driver;
+    using ShoppingCartService.Data;
+    using ShoppingCartService.Data.Dto;
+    using ShoppingCartService.Queries;
+    using ShoppingCartService.Resolvers;
 
     public class Startup
     {
@@ -32,10 +28,12 @@ namespace ShoppingCartService
                 .AddGraphQLServer()
                 .AddQueryType<CartQuery>();
             
-            services.AddDbContext<ApplicationDbContext>(
-                options => options.UseSqlite("Data Source=database.db"));
+            services.AddSingleton<IMongoClient>(new MongoClient("mongodb://127.0.0.1:27017"));
+            services.AddSingleton<IMongoDatabase>(s => s.GetRequiredService<IMongoClient>().GetDatabase("PharmacityDB"));
+            services.AddSingleton<IMongoCollection<CartDto>>(s => s.GetRequiredService<IMongoDatabase>().GetCollection<CartDto>("carts"));
+            services.AddSingleton<CartsRepository>();
 
-            services.AddScoped<ModelResolver>();
+            services.AddScoped<CartResolver>();
 
         }
 

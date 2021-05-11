@@ -1,32 +1,37 @@
-using System.Collections.Generic;
-using System.Linq;
-using ProductService.Data;
-using ProductService.Models;
-
-namespace ProductService.Resolvers
+namespace ShoppingCartService.Resolvers
 {
+    using System.Linq;
+    using System.Threading.Tasks;
+    using ShoppingCartService.Data;
     using ShoppingCartService.Models;
 
-    public class ProductsResolver
+    public class CartResolver
     {
-        private readonly ApplicationDbContext _context;
-        
-        public ProductsResolver(ApplicationDbContext context)
+        private readonly CartsRepository _repository;
+
+        public CartResolver(CartsRepository repository)
         {
-            _context = context;
+            _repository = repository;
         }
-        
-        public Cart Cart()
+
+        public async Task<Cart> Cart(string id)
         {
-            return _context.Products.Select(productDto => new Cart
+            var queryResult = await _repository.GetCartAsync(id, default);
+            return new Cart
             {
-                Id = productDto.ProductId,
-                Name = productDto.Name,
-                Description = productDto.Description,
-                Price = productDto.Price,
-                Quantity = productDto.Quantity,
-                Color = productDto.Color,
-                Size = productDto.Size
+                CartId = queryResult.CartId,
+                OrderId = queryResult.OrderId,
+                ProductIds = queryResult.ProductIds
+            };
+        }
+
+        public IQueryable<Cart> Carts()
+        {
+            return _repository.GetCartsAsync().Select(c => new Cart
+            {
+                CartId = c.CartId,
+                OrderId = c.OrderId,
+                ProductIds = c.ProductIds
             });
         }
     }
