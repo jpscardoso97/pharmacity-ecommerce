@@ -14,7 +14,7 @@ namespace ProductService.Data
             
         }
 
-        public DbSet<ProductDto> Products { get; set; }
+        public DbSet<CartDto> Products { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

@@ -14,6 +14,8 @@ using Microsoft.OpenApi.Models;
 
 namespace ShoppingCartService
 {
+    using ProductService.Data;
+
     public class Startup
     {
         public Startup(IConfiguration configuration)

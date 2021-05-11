@@ -10,9 +10,9 @@ namespace ShoppingCartService.Data.Dto
         [DatabaseGenerated(DatabaseGeneratedOption.None)]
         public int Id { get; set; }
         
-        public string[] ProductIds { get; set; }
+        public string CartId { get; set; }
         
-        public string CustomerId { get; set; }
+        public string[] ProductIds { get; set; }
         
         public string OrderId { get; set; }
     }
