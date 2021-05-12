@@ -1,5 +1,4 @@
 using System.Collections.Generic;
-using System.Threading.Tasks;
 using HotChocolate;
 using ProductService.Models;
 using ProductService.Resolvers;
@@ -11,6 +10,11 @@ namespace ProductService.Queries
         public IEnumerable<Product> GetProducts([Service] ProductsResolver resolver)
         {
             return resolver.Products();
+        }
+
+        public IEnumerable<Product> GetProductsByIds([Service] ProductsResolver resolver, string[] ids)
+        {
+            return resolver.ProductsByIds(ids);
         }
     }
 }

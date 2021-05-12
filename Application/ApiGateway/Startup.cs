@@ -1,21 +1,12 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using ApiGateway.Models;
-using ApiGateway.Queries;
-using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
-using Microsoft.OpenApi.Models;
-
 namespace ApiGateway
 {
+    using System;
+    using Microsoft.AspNetCore.Builder;
+    using Microsoft.AspNetCore.Hosting;
+    using Microsoft.Extensions.Configuration;
+    using Microsoft.Extensions.DependencyInjection;
+    using Microsoft.Extensions.Hosting;
+
     public class Startup
     {
         public const string Products = "products";
@@ -44,10 +35,10 @@ namespace ApiGateway
 
             services
                 .AddGraphQLServer()
-                .AddQueryType(d => d.Name("Query"))
-                .AddRemoteSchema(Products, true)
-                .AddRemoteSchema(Customers, true)
-                .AddRemoteSchema(Carts, true)
+                .AddQueryType(d => d.Name("LocalQuery"))
+                .AddRemoteSchema(Products)
+                .AddRemoteSchema(Customers)
+                .AddRemoteSchema(Carts)
                 .AddTypeExtensionsFromFile("./Stitching.graphql");
         }
 

@@ -25,7 +25,7 @@
         
         public Task<CustomerDto> GetCustomerAsync(string customerId, CancellationToken cancellationToken)
         {
-            return _customersCollection.Find(c => c.Id == ObjectId.Parse(customerId))
+            return _customersCollection.Find(c => c.CustomerId == customerId)
                 .FirstOrDefaultAsync(cancellationToken);
         } 
         

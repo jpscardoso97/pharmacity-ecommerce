@@ -13,9 +13,9 @@ namespace CustomerService.Queries
             return resolver.Customers();
         }
 
-        public async Task<Customer> GetCustomer([Service] CustomerResolver resolver, string cartId)
+        public async Task<Customer> GetCustomer([Service] CustomerResolver resolver, string id)
         {
-            return await resolver.Customer(cartId);
+            return await resolver.Customer(id);
         }
     }
 }

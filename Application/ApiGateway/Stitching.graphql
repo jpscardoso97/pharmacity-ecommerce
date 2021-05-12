@@ -1,13 +1,15 @@
-﻿extend type Query {
+﻿extend type LocalQuery {
   products: [Product] @delegate(schema: "products")
+  productsByIds(ids:[String]): [Product] @delegate(schema: "products")
+  customer(id: String): Customer @delegate(schema: "customers")
   customers: [Customer] @delegate(schema: "customers")
-  cart(cartId:String): [Cart] @delegate(schema: "carts")
+  cart(cartId:String): Cart @delegate(schema: "carts")
 }
 
 extend type Cart {
-  items: [Product] @delegate(schema: "products", path: "products(ids: $fields:productIds)")
+  items: [Product] @delegate(schema: "products", path: "productsByIds(ids: $fields:productIds)")
 }
 
 extend type Customer {
-  cart: [Cart] @delegate(schema: "carts", path: "cart(cartId: $fields:cartId)")
+  cart: Cart @delegate(schema: "carts", path: "cart(cartId: $fields:cartId)")
 }
