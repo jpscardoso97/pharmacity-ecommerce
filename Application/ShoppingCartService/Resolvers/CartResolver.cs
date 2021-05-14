@@ -2,6 +2,7 @@ namespace ShoppingCartService.Resolvers
 {
     using System.Linq;
     using System.Threading.Tasks;
+    using Crosscutting.Helpers;
     using ShoppingCartService.Data;
     using ShoppingCartService.Models;
 
@@ -20,8 +21,7 @@ namespace ShoppingCartService.Resolvers
             return new Cart
             {
                 CartId = queryResult.CartId,
-                OrderId = queryResult.OrderId,
-                ProductIds = queryResult.ProductIds
+                ProductIds = DataTransferHelper.ProductIdsToString(queryResult.ProductIds)
             };
         }
 
@@ -30,8 +30,7 @@ namespace ShoppingCartService.Resolvers
             return _repository.GetCartsAsync().Select(c => new Cart
             {
                 CartId = c.CartId,
-                OrderId = c.OrderId,
-                ProductIds = c.ProductIds
+                ProductIds = DataTransferHelper.ProductIdsToString(c.ProductIds)
             });
         }
     }

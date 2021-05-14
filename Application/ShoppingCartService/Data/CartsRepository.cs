@@ -4,7 +4,6 @@
     using System.Linq;
     using System.Threading;
     using System.Threading.Tasks;
-    using MongoDB.Bson;
     using MongoDB.Driver;
     using ShoppingCartService.Data.Dto;
     using ShoppingCartService.Data.Fakes;

@@ -7,9 +7,7 @@ namespace ShoppingCartService.Data.Dto
         public ObjectId Id { get; set; }
         
         public string CartId { get; set; }
-        
+
         public string[] ProductIds { get; set; }
-        
-        public string OrderId { get; set; }
     }
 }

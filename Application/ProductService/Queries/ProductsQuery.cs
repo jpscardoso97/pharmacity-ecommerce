@@ -12,7 +12,7 @@ namespace ProductService.Queries
             return resolver.Products();
         }
 
-        public IEnumerable<Product> GetProductsByIds([Service] ProductsResolver resolver, string[] ids)
+        public IEnumerable<Product> GetProductsById([Service] ProductsResolver resolver, string ids)
         {
             return resolver.ProductsByIds(ids);
         }

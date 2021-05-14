@@ -5,6 +5,9 @@ using ProductService.Models;
 
 namespace ProductService.Resolvers
 {
+    using System;
+    using Crosscutting.Helpers;
+
     public class ProductsResolver
     {
         private readonly ApplicationDbContext _context;
@@ -28,8 +31,9 @@ namespace ProductService.Resolvers
             });
         }
 
-        public IEnumerable<Product> ProductsByIds(string[] ids)
+        public IEnumerable<Product> ProductsByIds(string idsString)
         {
+            var ids = DataTransferHelper.ProductIdsFromString(idsString);
             return _context.Products.Where(p => ids.Contains(p.ProductId)).Select(productDto => new Product
             {
                 Id = productDto.ProductId,

@@ -1,6 +1,7 @@
 namespace ApiGateway
 {
     using System;
+    using HotChocolate.Types;
     using Microsoft.AspNetCore.Builder;
     using Microsoft.AspNetCore.Hosting;
     using Microsoft.Extensions.Configuration;
@@ -38,7 +39,7 @@ namespace ApiGateway
                 .AddQueryType(d => d.Name("LocalQuery"))
                 .AddRemoteSchema(Products)
                 .AddRemoteSchema(Customers)
-                .AddRemoteSchema(Carts)
+                .AddRemoteSchema(Carts, true)
                 .AddTypeExtensionsFromFile("./Stitching.graphql");
         }
 

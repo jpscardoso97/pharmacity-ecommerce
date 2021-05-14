@@ -14,6 +14,8 @@ namespace CustomerService
     using CustomerService.Data.Dto;
     using CustomerService.Queries;
     using CustomerService.Resolvers;
+    using HotChocolate.Language;
+    using HotChocolate.Types;
     using MongoDB.Driver;
     using ShoppingCartService.Data;
 
