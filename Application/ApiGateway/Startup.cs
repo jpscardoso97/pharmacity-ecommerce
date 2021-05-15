@@ -1,7 +1,6 @@
 namespace ApiGateway
 {
     using System;
-    using HotChocolate.Types;
     using Microsoft.AspNetCore.Builder;
     using Microsoft.AspNetCore.Hosting;
     using Microsoft.Extensions.Configuration;
@@ -10,9 +9,11 @@ namespace ApiGateway
 
     public class Startup
     {
-        public const string Products = "products";
-        public const string Customers = "customers";
-        public const string Carts = "carts";
+        private const string Products = "products";
+        private const string Customers = "customers";
+        private const string Carts = "carts";
+        private const string Orders = "orders";
+        private const string Prescriptions = "prescriptions";
         
         public Startup(IConfiguration configuration)
         {
@@ -33,7 +34,13 @@ namespace ApiGateway
             services.AddHttpClient(
                 Carts, 
                 c => c.BaseAddress = new Uri("https://localhost:5003/graphql"));
-
+            services.AddHttpClient(
+                Orders, 
+                c => c.BaseAddress = new Uri("https://localhost:5004/graphql"));
+            services.AddHttpClient(
+                Prescriptions, 
+                c => c.BaseAddress = new Uri("https://localhost:5005/graphql"));
+            
             services
                 .AddGraphQLServer()
                 .AddQueryType(d => d.Name("LocalQuery"))

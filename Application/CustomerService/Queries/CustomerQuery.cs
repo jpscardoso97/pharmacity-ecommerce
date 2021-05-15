@@ -2,9 +2,9 @@ namespace CustomerService.Queries
 {
     using System.Linq;
     using System.Threading.Tasks;
+    using CustomerService.Models;
     using CustomerService.Resolvers;
     using HotChocolate;
-    using ShoppingCartService.Models;
 
     public class CustomerQuery
     {
@@ -16,6 +16,16 @@ namespace CustomerService.Queries
         public async Task<Customer> GetCustomer([Service] CustomerResolver resolver, string id)
         {
             return await resolver.Customer(id);
+        }
+        
+        public IQueryable<Address> GetAddresses([Service] AddressResolver resolver, string ids)
+        {
+            return resolver.Addresses(ids);
+        }
+
+        public async Task<Address> GetAddress([Service] AddressResolver resolver, string id)
+        {
+            return await resolver.Address(id);
         }
     }
 }

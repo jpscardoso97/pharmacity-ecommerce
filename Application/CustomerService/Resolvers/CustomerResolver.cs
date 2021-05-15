@@ -2,8 +2,9 @@ namespace CustomerService.Resolvers
 {
     using System.Linq;
     using System.Threading.Tasks;
+    using Crosscutting.Helpers;
+    using CustomerService.Models;
     using ShoppingCartService.Data;
-    using ShoppingCartService.Models;
 
     public class CustomerResolver
     {
@@ -17,27 +18,27 @@ namespace CustomerService.Resolvers
         public async Task<Customer> Customer(string id)
         {
             var queryResult = await _repository.GetCustomerAsync(id, default);
-            return new Customer
+            return queryResult != null ? new Customer
             {
-                CustomerId = queryResult.CustomerId,
+                Id = queryResult.CustomerId,
                 CartId = queryResult.CartId,
                 Name = queryResult.Name,
                 Email = queryResult.Email,
-                Addresses = queryResult.Addresses,
+                Addresses = DataTransferHelper.ProductIdsToString(queryResult.Addresses),
                 DiscountCard = queryResult.DiscountCard,
                 WishlistId = queryResult.WishlistId
-            };
+            } : default;
         }
 
         public IQueryable<Customer> Customers()
         {
             return _repository.GetCustomers().Select(c => new Customer
             {
-                CustomerId = c.CustomerId,
+                Id = c.CustomerId,
                 CartId = c.CartId,
                 Name = c.Name,
                 Email = c.Email,
-                Addresses = c.Addresses,
+                Addresses = DataTransferHelper.ProductIdsToString(c.Addresses),
                 DiscountCard = c.DiscountCard,
                 WishlistId = c.WishlistId
             });

@@ -10,12 +10,28 @@ using Microsoft.Extensions.Hosting;
 
 namespace PrescriptionService
 {
+    using MongoDB.Driver;
+    using PrescriptionService.Data;
+    using PrescriptionService.Data.Dto;
+    using PrescriptionService.Queries;
+    using PrescriptionService.Resolvers;
+
     public class Startup
     {
         // This method gets called by the runtime. Use this method to add services to the container.
         // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
         public void ConfigureServices(IServiceCollection services)
         {
+            services
+                .AddGraphQLServer()
+                .AddQueryType<PrescriptionsQuery>();
+            
+            services.AddSingleton<IMongoClient>(new MongoClient("mongodb://127.0.0.1:27017"));
+            services.AddSingleton<IMongoDatabase>(s => s.GetRequiredService<IMongoClient>().GetDatabase("PharmacityDB"));
+            services.AddSingleton<IMongoCollection<PrescriptionDto>>(s => s.GetRequiredService<IMongoDatabase>().GetCollection<PrescriptionDto>("orders"));
+            services.AddSingleton<PrescriptionsRepository>();
+
+            services.AddScoped<PrescriptionsResolver>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -30,7 +46,7 @@ namespace PrescriptionService
 
             app.UseEndpoints(endpoints =>
             {
-                endpoints.MapGet("/", async context => { await context.Response.WriteAsync("Hello World!"); });
+                endpoints.MapGraphQL();
             });
         }
     }

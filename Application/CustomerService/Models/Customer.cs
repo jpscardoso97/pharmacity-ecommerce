@@ -1,10 +1,8 @@
-﻿namespace ShoppingCartService.Models
+﻿namespace CustomerService.Models
 {
-    using System.Collections.Generic;
-
     public class Customer
     {
-        public string CustomerId { get; set; }
+        public string Id { get; set; }
         
         public string Name { get; set; }
         
@@ -16,6 +14,8 @@
         
         public string WishlistId { get; set; }
         
-        public IEnumerable<string> Addresses { get; set; }
+        public string Addresses { get; set; }
+
+        public string Orders { get; set; }
     }
 }

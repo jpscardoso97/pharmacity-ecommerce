@@ -1,10 +1,8 @@
-﻿namespace CustomerService.Data.Dto
+﻿namespace CustomerService.Models
 {
-    public class AddressDto
-    { 
-        public int Id { get; set; }
-
-        public string AddressId { get; set; }
+    public class Address
+    {
+        public string Id { get; set; }
 
         public string DeliveryAddress { get; set; }
 

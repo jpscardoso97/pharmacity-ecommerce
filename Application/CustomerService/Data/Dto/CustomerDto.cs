@@ -1,8 +1,5 @@
 namespace CustomerService.Data.Dto
 {
-    using System.Collections.Generic;
-    using System.ComponentModel.DataAnnotations;
-    using System.ComponentModel.DataAnnotations.Schema;
     using MongoDB.Bson;
 
     public class CustomerDto
@@ -21,6 +18,6 @@ namespace CustomerService.Data.Dto
         
         public string WishlistId { get; set; }
         
-        public IEnumerable<string> Addresses { get; set; }
+        public string[] Addresses { get; set; }
     }
 }

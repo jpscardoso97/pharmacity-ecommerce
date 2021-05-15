@@ -8,16 +8,16 @@
     {
         private const int CustomerCount = 10;
 
-        private static List<string> GetRandomAddresses(Faker faker)
+        private static string[] GetRandomAddresses(Faker faker)
         {
             var addressesCount = faker.Random.Number(1, 3);
             var addressIds = new List<string>();
             for (var i = 0; i < addressesCount; i++)
             {
-                addressIds.Add(FakeAddresses.GenerateAddressId(faker.Random.Number(1, CustomerCount)));
+                addressIds.Add(FakeAddresses.GenerateAddressId(faker.Random.Number(0, CustomerCount-1)));
             }
 
-            return addressIds;
+            return addressIds.ToArray();
         }
 
         public static IEnumerable<CustomerDto> Data()

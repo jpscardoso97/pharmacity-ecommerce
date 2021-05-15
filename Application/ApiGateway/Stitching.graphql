@@ -4,6 +4,7 @@
   customer(id: String): Customer @delegate(schema: "customers")
   customers: [Customer] @delegate(schema: "customers")
   cart(cartId:String): Cart @delegate(schema: "carts")
+  addresses(ids:String): Address @delegate(schema: "customers")
 }
 
 extend type Cart {
@@ -12,4 +13,6 @@ extend type Cart {
 
 extend type Customer {
   cart: Cart @delegate(schema: "carts", path: "cart(cartId: $fields:cartId)")
+  addresses: Address @delegate(schema: "customers", path: "addresses(ids: $fields:addresses)")
+  orders:[Order] @delegate(schema: "orders", path: "orders(ids: $fields:orders)")
 }
