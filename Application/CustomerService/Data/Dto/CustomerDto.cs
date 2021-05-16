@@ -18,6 +18,8 @@ namespace CustomerService.Data.Dto
         
         public string WishlistId { get; set; }
         
+        public string[] Orders { get; set; }
+        
         public string[] Addresses { get; set; }
     }
 }
