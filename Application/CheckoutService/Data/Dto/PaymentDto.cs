@@ -1,10 +1,14 @@
 ﻿namespace CheckoutService.Data.Dto
 {
+    using MongoDB.Bson;
+
     public class PaymentDto
     {
-        public int Id { get; set; }
+        public ObjectId Id { get; set; }
         
         public string PaymentId { get; set; }
+        
+        public string CustomerId { get; set; }
         
         public string PaymentInfoId { get; set; }
         

@@ -14,6 +14,7 @@ namespace ApiGateway
         private const string Carts = "carts";
         private const string Orders = "orders";
         private const string Prescriptions = "prescriptions";
+        private const string Checkout = "checkout";
         
         public Startup(IConfiguration configuration)
         {
@@ -41,6 +42,10 @@ namespace ApiGateway
                 Prescriptions, 
                 c => c.BaseAddress = new Uri("https://localhost:5005/graphql"));
             
+            services.AddHttpClient(
+                Checkout, 
+                c => c.BaseAddress = new Uri("https://localhost:5006/graphql"));
+
             services
                 .AddGraphQLServer()
                 .AddQueryType(d => d.Name("LocalQuery"))

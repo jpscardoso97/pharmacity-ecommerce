@@ -2,7 +2,9 @@
 {
     public class Payment
     {
-        public string PaymentId { get; set; }
+        public string Id { get; set; }
+        
+        public string CustomerId { get; set; }
         
         public string PaymentInfoId { get; set; }
         

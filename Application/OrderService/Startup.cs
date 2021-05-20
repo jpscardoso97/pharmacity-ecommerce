@@ -40,7 +40,7 @@ namespace OrderService
                 .AddType<PrescriptionOrder>()
                 .AddQueryType<OrdersQuery>();
             
-            services.AddSingleton<IMongoClient>(new MongoClient("mongodb://127.0.0.1:27017"));
+            services.AddSingleton<IMongoClient>(new MongoClient("mongodb://127.0.0.1:8069"));
             services.AddSingleton<IMongoDatabase>(s => s.GetRequiredService<IMongoClient>().GetDatabase("PharmacityDB"));
             services.AddSingleton<IMongoCollection<OrderDto>>(s => s.GetRequiredService<IMongoDatabase>().GetCollection<OrderDto>("orders"));
             services.AddSingleton<OrdersRepository>();

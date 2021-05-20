@@ -28,7 +28,7 @@ namespace ShoppingCartService
                 .AddGraphQLServer()
                 .AddQueryType<CartQuery>();
             
-            services.AddSingleton<IMongoClient>(new MongoClient("mongodb://127.0.0.1:27017"));
+            services.AddSingleton<IMongoClient>(new MongoClient("mongodb://127.0.0.1:8069"));
             services.AddSingleton<IMongoDatabase>(s => s.GetRequiredService<IMongoClient>().GetDatabase("PharmacityDB"));
             services.AddSingleton<IMongoCollection<CartDto>>(s => s.GetRequiredService<IMongoDatabase>().GetCollection<CartDto>("carts"));
             services.AddSingleton<CartsRepository>();

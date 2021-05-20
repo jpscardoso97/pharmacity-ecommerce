@@ -1,6 +1,7 @@
 ﻿namespace CheckoutService.Data
 {
     using System;
+    using System.Threading;
     using System.Threading.Tasks;
     using CheckoutService.Data.Dto;
     using CheckoutService.Data.Fakes;
@@ -25,5 +26,12 @@
             return await _paymentsCollection.Find(p => p.PaymentId == paymentId).FirstOrDefaultAsync();
         }
 
+        public async Task<PaymentDto> CreatePayment(PaymentDto paymentDto)
+        {
+            await _paymentsCollection.InsertOneAsync(paymentDto,
+                new InsertOneOptions(), CancellationToken.None);
+
+            return await _paymentsCollection.Find(p => p.PaymentId == paymentDto.PaymentId).FirstOrDefaultAsync();
+        }
     }
 }

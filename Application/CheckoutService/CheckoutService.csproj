@@ -7,11 +7,12 @@
     <ItemGroup>
       <PackageReference Include="Bogus" Version="33.0.2" />
       <PackageReference Include="HotChocolate.Abstractions" Version="11.2.2" />
+      <PackageReference Include="HotChocolate.AspNetCore" Version="11.2.2" />
       <PackageReference Include="MongoDB.Driver" Version="2.12.3" />
     </ItemGroup>
 
     <ItemGroup>
-      <Folder Include="Mutations" />
+      <ProjectReference Include="..\Crosscutting\Crosscutting.csproj" />
     </ItemGroup>
 
 </Project>
