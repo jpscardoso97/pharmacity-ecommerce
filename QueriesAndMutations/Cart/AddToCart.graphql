@@ -1,0 +1,6 @@
+mutation {
+   addItemToCart(cartId: "CRT-0", productId: "4"){
+     cartId
+     productIds
+   }
+}

@@ -1,0 +1,31 @@
+mutation {
+  createProductsOrder(
+		order: { 
+			date: "20/05/2021-5:00pm", 
+			items: [
+				{
+				  productId: "2J23LNH",
+				  price: "24€",
+				  quantity: "1"
+				}
+			],
+			paymentId: "PAY-1",
+			value: "27€"
+		})
+	{
+		id
+		value
+		deliveryId
+		paymentId
+		date
+		items{
+			price
+			productId
+			quantity
+		}
+		status{
+			date,
+			value
+		}
+	}
+}
