@@ -31,7 +31,7 @@ namespace CustomerService.Resolvers
 
         public IQueryable<Address> Addresses(string ids)
         {
-            var addressIds = DataTransferHelper.ProductIdsFromString(ids);
+            var addressIds = DataTransferHelper.IdsFromString(ids);
             return _repository.GetAddresses().Where(a => addressIds.Contains(a.AddressId)).Select(c => new Address
             {
                 Id = c.AddressId,

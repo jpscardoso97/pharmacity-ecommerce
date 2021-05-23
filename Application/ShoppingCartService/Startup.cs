@@ -5,10 +5,10 @@ namespace ShoppingCartService
     using Microsoft.Extensions.Configuration;
     using Microsoft.Extensions.DependencyInjection;
     using Microsoft.Extensions.Hosting;
-    using MongoDB.Bson;
     using MongoDB.Driver;
     using ShoppingCartService.Data;
     using ShoppingCartService.Data.Dto;
+    using ShoppingCartService.Mutations;
     using ShoppingCartService.Queries;
     using ShoppingCartService.Resolvers;
 
@@ -26,7 +26,10 @@ namespace ShoppingCartService
         {   
             services
                 .AddGraphQLServer()
-                .AddQueryType<CartQuery>();
+                .AddQueryType()
+                .AddTypeExtension<CartQuery>()
+                .AddMutationType()
+                .AddTypeExtension<CartMutations>();
             
             services.AddSingleton<IMongoClient>(new MongoClient("mongodb://127.0.0.1:8069"));
             services.AddSingleton<IMongoDatabase>(s => s.GetRequiredService<IMongoClient>().GetDatabase("PharmacityDB"));

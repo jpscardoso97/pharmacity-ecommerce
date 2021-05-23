@@ -10,15 +10,14 @@
         private const int CountOrders = 5;
 
         public static IEnumerable<OrderDto> Data => new Faker<OrderDto>()
-            .RuleFor(o => o.Id, f => f.UniqueIndex)
-            .RuleFor(o => o.OrderId, (f, o) => $"ORD-{o.Id}")
+            .RuleFor(o => o.OrderId, (f, o) => $"ORD-{f.UniqueIndex}")
             .RuleFor(o => o.Value, f => f.Commerce.Price())
-            .RuleFor(o => o.DeliveryId, (f, o) => $"DEL-{o.Id}")
+            .RuleFor(o => o.DeliveryId, (f, o) => $"DEL-{f.UniqueIndex}")
             .RuleFor(o => o.Status, f => GetOrderStatusTransitions)
             .RuleFor(o => o.Date, f => "14-05-2021")
-            .RuleFor(o => o.PaymentId, (f, o) => $"PAY-{o.Id}")
+            .RuleFor(o => o.PaymentId, (f, o) => $"PAY-{f.UniqueIndex}")
             .RuleFor(o => o.Items, f => GetOrderItems(f))
-            .RuleFor(o => o.PrescriptionId, (f, o) => o.Items==null ? $"PRS-{o.Id}" : null)
+            .RuleFor(o => o.PrescriptionId, (f, o) => o.Items==null ? $"PRS-{f.UniqueIndex}" : null)
             .Generate(CountOrders);
 
         private static IEnumerable<OrderItemDto> GetOrderItems(Faker f)
@@ -51,12 +50,12 @@
             return null;
         }
 
-        private static IDictionary<string, int> GetOrderStatusTransitions => new Dictionary<string, int>
+        private static IEnumerable<OrderStatusDto> GetOrderStatusTransitions => new List<OrderStatusDto>
         {
-            {"15-05-2021", (int) OrderStatus.PendingPayment},
-            {"16-05-2021", (int) OrderStatus.Processing},
-            {"20-05-2021", (int) OrderStatus.Shipped},
-            {"25-05-2021", (int) OrderStatus.Delivered}
+            new (){ Date = "15/05/2021-5:30pm", Value = (int) OrderStatusEnum.PendingPayment},
+            new (){ Date = "15/05/2021-5:31pm", Value = (int) OrderStatusEnum.Processing},
+            new (){ Date = "20-05-2021-8:00am", Value = (int) OrderStatusEnum.Shipped},
+            new (){ Date = "25-05-2021-3:30pm", Value = (int) OrderStatusEnum.Delivered}
         };
     }
 }

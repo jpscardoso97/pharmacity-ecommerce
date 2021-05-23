@@ -1,6 +1,9 @@
 namespace ShoppingCartService.Resolvers
 {
+    using System.Collections;
+    using System.Collections.Generic;
     using System.Linq;
+    using System.Threading;
     using System.Threading.Tasks;
     using Crosscutting.Helpers;
     using ShoppingCartService.Data;
@@ -21,17 +24,31 @@ namespace ShoppingCartService.Resolvers
             return new Cart
             {
                 CartId = queryResult.CartId,
-                ProductIds = DataTransferHelper.ProductIdsToString(queryResult.ProductIds)
+                ProductIds = DataTransferHelper.IdsToString(queryResult.ProductIds)
             };
         }
 
-        public IQueryable<Cart> Carts()
+        public IEnumerable<Cart> Carts()
         {
-            return _repository.GetCartsAsync().Select(c => new Cart
+            return _repository.GetCarts().ToList().Select(c => new Cart
             {
                 CartId = c.CartId,
-                ProductIds = DataTransferHelper.ProductIdsToString(c.ProductIds)
+                ProductIds = DataTransferHelper.IdsToString(c.ProductIds)
             });
+        }
+
+        public async Task<Cart> AddToCart(string cartId, string productId)
+        {
+            var mutationResult = await _repository.AddItem(cartId, productId, default);
+
+            if (mutationResult == null)
+                return default;
+
+            return new Cart
+            {
+                CartId = mutationResult.CartId,
+                ProductIds = DataTransferHelper.IdsToString(mutationResult.ProductIds)
+            };
         }
     }
 }

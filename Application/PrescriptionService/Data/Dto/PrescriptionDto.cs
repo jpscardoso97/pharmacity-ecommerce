@@ -1,8 +1,10 @@
 ﻿namespace PrescriptionService.Data.Dto
 {
+    using MongoDB.Bson;
+
     public class PrescriptionDto
     {
-        public int Id { get; set; }
+        public ObjectId Id { get; set; }
         
         public string Number { get; set; }
         

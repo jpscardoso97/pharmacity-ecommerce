@@ -1,10 +1,18 @@
 ﻿extend type LocalQuery {
-  products: [Product] @delegate(schema: "products")
-  productsById(ids:String): [Product] @delegate(schema: "products")
-  customer(id: String): Customer @delegate(schema: "customers")
-  customers: [Customer] @delegate(schema: "customers")
-  cart(cartId:String): Cart @delegate(schema: "carts")
-  addresses(ids:String): Address @delegate(schema: "customers")
+  products:[Product] @delegate(schema: "products")
+  productsById(ids:String):[Product] @delegate(schema: "products")
+  customer(id:String):Customer @delegate(schema: "customers")
+  payment(id:String):Payment @delegate(schema: "checkout")
+  customers:[Customer] @delegate(schema: "customers")
+  cart(cartId:String):Cart @delegate(schema: "carts")
+  addresses(ids:String):Address @delegate(schema: "customers")
+}
+
+extend type LocalMutation {
+  addItemToCart(cartId:String, productId:String):Cart @delegate(schema: "carts")
+  createProductsOrder(order:Order):Order @delegate(schema: "orders")
+  createPrescriptionOrder(order:Order):Order @delegate(schema: "orders")
+  createPayment(payment:Payment):Payment @delegate(schema: "checkout")
 }
 
 extend type Cart {

@@ -24,9 +24,10 @@ namespace CustomerService.Resolvers
                 CartId = queryResult.CartId,
                 Name = queryResult.Name,
                 Email = queryResult.Email,
-                Addresses = DataTransferHelper.ProductIdsToString(queryResult.Addresses),
+                Addresses = DataTransferHelper.IdsToString(queryResult.Addresses),
                 DiscountCard = queryResult.DiscountCard,
-                WishlistId = queryResult.WishlistId
+                WishlistId = queryResult.WishlistId,
+                Orders = DataTransferHelper.IdsToString(queryResult.Orders)
             } : default;
         }
 
@@ -38,9 +39,10 @@ namespace CustomerService.Resolvers
                 CartId = c.CartId,
                 Name = c.Name,
                 Email = c.Email,
-                Addresses = DataTransferHelper.ProductIdsToString(c.Addresses),
+                Addresses = DataTransferHelper.IdsToString(c.Addresses),
                 DiscountCard = c.DiscountCard,
-                WishlistId = c.WishlistId
+                WishlistId = c.WishlistId,
+                Orders = DataTransferHelper.IdsToString(c.Orders)
             });
         }
     }

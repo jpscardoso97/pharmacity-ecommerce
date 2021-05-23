@@ -32,8 +32,16 @@
 
         public IQueryable<OrderDto> GetOrders(string ids)
         {
-            var idsList = DataTransferHelper.ProductIdsFromString(ids);
+            var idsList = DataTransferHelper.IdsFromString(ids);
             return _ordersCollection.AsQueryable().Where(o => idsList.Contains(o.OrderId));
+        }
+
+        public async Task<OrderDto> CreateOrder(OrderDto order)
+        {
+            await _ordersCollection.InsertOneAsync(order,
+                new InsertOneOptions(), CancellationToken.None);
+
+            return await _ordersCollection.Find(p => p.OrderId == order.OrderId).FirstOrDefaultAsync();
         }
     }
 }

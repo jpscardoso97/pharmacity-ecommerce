@@ -41,7 +41,6 @@ namespace ApiGateway
             services.AddHttpClient(
                 Prescriptions, 
                 c => c.BaseAddress = new Uri("https://localhost:5005/graphql"));
-            
             services.AddHttpClient(
                 Checkout, 
                 c => c.BaseAddress = new Uri("https://localhost:5006/graphql"));
@@ -49,9 +48,13 @@ namespace ApiGateway
             services
                 .AddGraphQLServer()
                 .AddQueryType(d => d.Name("LocalQuery"))
+                .AddMutationType(d => d.Name("LocalMutation"))
                 .AddRemoteSchema(Products)
                 .AddRemoteSchema(Customers)
-                .AddRemoteSchema(Carts, true)
+                .AddRemoteSchema(Orders)
+                .AddRemoteSchema(Prescriptions)
+                .AddRemoteSchema(Checkout)
+                .AddRemoteSchema(Carts)
                 .AddTypeExtensionsFromFile("./Stitching.graphql");
         }
 

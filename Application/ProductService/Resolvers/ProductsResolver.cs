@@ -1,12 +1,12 @@
 using System.Collections.Generic;
 using System.Linq;
+
+using Crosscutting.Helpers;
 using ProductService.Data;
 using ProductService.Models;
 
 namespace ProductService.Resolvers
 {
-    using System;
-    using Crosscutting.Helpers;
 
     public class ProductsResolver
     {
@@ -33,7 +33,7 @@ namespace ProductService.Resolvers
 
         public IEnumerable<Product> ProductsByIds(string idsString)
         {
-            var ids = DataTransferHelper.ProductIdsFromString(idsString);
+            var ids = DataTransferHelper.IdsFromString(idsString);
             return _context.Products.Where(p => ids.Contains(p.ProductId)).Select(productDto => new Product
             {
                 Id = productDto.ProductId,

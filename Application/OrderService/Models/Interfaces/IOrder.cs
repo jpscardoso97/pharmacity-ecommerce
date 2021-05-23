@@ -12,7 +12,7 @@
         
         public string Date { get; set; }
 
-        public IDictionary<string, OrderStatus> Status { get; set; }
+        public IEnumerable<OrderStatus> Status { get; set; }
         
         public string PaymentId { get; set; }
         

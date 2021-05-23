@@ -18,7 +18,7 @@ namespace OrderService
     using OrderService.Data;
     using OrderService.Data.Dto;
     using OrderService.Models;
-    using OrderService.Models.Interfaces;
+    using OrderService.Mutations;
     using OrderService.Queries;
     using OrderService.Resolvers;
 
@@ -38,7 +38,10 @@ namespace OrderService
                 .AddGraphQLServer()
                 .AddType<ProductsOrder>()
                 .AddType<PrescriptionOrder>()
-                .AddQueryType<OrdersQuery>();
+                .AddQueryType()
+                .AddTypeExtension<OrdersQuery>()
+                .AddMutationType()
+                .AddTypeExtension<OrderMutations>();
             
             services.AddSingleton<IMongoClient>(new MongoClient("mongodb://127.0.0.1:8069"));
             services.AddSingleton<IMongoDatabase>(s => s.GetRequiredService<IMongoClient>().GetDatabase("PharmacityDB"));
