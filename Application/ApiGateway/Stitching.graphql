@@ -10,8 +10,6 @@
 
 extend type LocalMutation {
   addItemToCart(cartId:String, productId:String):Cart @delegate(schema: "carts")
-  createProductsOrder(order:Order):Order @delegate(schema: "orders")
-  createPrescriptionOrder(order:Order):Order @delegate(schema: "orders")
   createPayment(payment:Payment):Payment @delegate(schema: "checkout")
 }
 

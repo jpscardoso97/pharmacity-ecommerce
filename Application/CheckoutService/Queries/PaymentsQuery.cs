@@ -6,7 +6,7 @@
     using HotChocolate;
     using HotChocolate.Types;
 
-    [ExtendObjectType(OperationTypeNames.Query)]
+    [ExtendObjectType("CheckoutQuery")]
     public class PaymentsQuery
     {
         public async Task<Payment> GetPayment([Service] PaymentsResolver resolver, string id)

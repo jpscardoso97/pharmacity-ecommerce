@@ -1,13 +1,10 @@
 mutation {
   createPrescriptionOrder(
-    order: {
-		prescriptionId: "0000000001",
-		value: "5€",
-		date: "21/05/2021-2:00pm", 
-		paymentId: "PAY-2",
-    }
+    prescriptionId: "0000000001",
+	paymentId: "PAY-2",
+    value: "5€",
   ){
-    id
+		id
 		value
 		deliveryId
 		paymentId

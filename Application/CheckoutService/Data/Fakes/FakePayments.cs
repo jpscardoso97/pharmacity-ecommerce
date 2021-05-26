@@ -3,6 +3,7 @@
     using System.Collections.Generic;
     using Bogus;
     using CheckoutService.Data.Dto;
+    using Crosscutting.Helpers;
 
     public class FakePayments
     {
@@ -12,8 +13,7 @@
             .RuleFor(p => p.PaymentId, (f, p) => $"PAY-{f.UniqueIndex}")
             .RuleFor(p => p.Amount, f => f.Commerce.Price())
             .RuleFor(p => p.CustomerId, f => f.Commerce.Price())
-            .RuleFor(p => p.Date, f => f.Date.Recent(10).ToShortDateString())
-            .RuleFor(p => p.OrderId, (f, p) => $"ORD-{f.UniqueIndex}")
+            .RuleFor(p => p.Date, f => DateHelper.GenerateReadableDateTime(f.Date.Recent(10)))
             .RuleFor(p => p.PaymentInfoId, f => f.Date.Recent(10).ToShortDateString())
             .Generate(CountPayments);
 

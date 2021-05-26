@@ -1,5 +1,6 @@
 ﻿namespace OrderService.Queries
 {
+    using System;
     using System.Collections.Generic;
     using System.Threading.Tasks;
     using HotChocolate;
@@ -12,6 +13,9 @@
     {
         public IEnumerable<IOrder> GetOrders([Service] OrdersResolver resolver, string ids)
         {
+            if (string.IsNullOrWhiteSpace(ids))
+                throw new ArgumentException("Requested invalid order ids");
+            
             return resolver.GetOrders(ids);
         }
         

@@ -1,25 +1,16 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
-using Microsoft.OpenApi.Models;
-
 namespace OrderService
 {
+    using Microsoft.AspNetCore.Builder;
+    using Microsoft.AspNetCore.Hosting;
+    using Microsoft.Extensions.Configuration;
+    using Microsoft.Extensions.DependencyInjection;
+    using Microsoft.Extensions.Hosting;
     using MongoDB.Driver;
     using OrderService.Data;
     using OrderService.Data.Dto;
     using OrderService.Models;
-    using OrderService.Mutations;
     using OrderService.Queries;
+    using OrderService.QueryHandlers;
     using OrderService.Resolvers;
 
     public class Startup
@@ -34,14 +25,13 @@ namespace OrderService
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddControllers();
             services
                 .AddGraphQLServer()
                 .AddType<ProductsOrder>()
                 .AddType<PrescriptionOrder>()
                 .AddQueryType()
-                .AddTypeExtension<OrdersQuery>()
-                .AddMutationType()
-                .AddTypeExtension<OrderMutations>();
+                .AddTypeExtension<OrdersQuery>();
             
             services.AddSingleton<IMongoClient>(new MongoClient("mongodb://127.0.0.1:8069"));
             services.AddSingleton<IMongoDatabase>(s => s.GetRequiredService<IMongoClient>().GetDatabase("PharmacityDB"));
@@ -49,6 +39,7 @@ namespace OrderService
             services.AddSingleton<OrdersRepository>();
 
             services.AddScoped<OrdersResolver>();
+            services.AddScoped<OrderCreationQueryHandler>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -63,7 +54,11 @@ namespace OrderService
 
             app.UseRouting();
 
-            app.UseEndpoints(endpoints => { endpoints.MapGraphQL(); });
+            app.UseEndpoints(endpoints =>
+            {
+                endpoints.MapGraphQL();
+                endpoints.MapControllers();
+            });
         }
     }
 }

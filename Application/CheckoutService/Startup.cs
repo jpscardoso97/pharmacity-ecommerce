@@ -1,7 +1,10 @@
 namespace CheckoutService
 {
+    using System;
+    using System.Net.Http;
     using CheckoutService.Data;
     using CheckoutService.Data.Dto;
+    using CheckoutService.InputTypes;
     using CheckoutService.Mutations;
     using CheckoutService.Queries;
     using CheckoutService.Resolvers;
@@ -13,16 +16,23 @@ namespace CheckoutService
 
     public class Startup
     {
+        private const string Orders = "orders";
+        
         // This method gets called by the runtime. Use this method to add services to the container.
         // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddHttpClient(
+                Orders, 
+                c => c.BaseAddress = new Uri("https://localhost:6004/graphql"));
+
             services
                 .AddGraphQLServer()
-                .AddQueryType()
+                .AddQueryType(d => d.Name("CheckoutQuery"))
                 .AddTypeExtension<PaymentsQuery>()
-                .AddMutationType()
-                .AddTypeExtension<PaymentsMutation>();
+                .AddMutationType(d => d.Name("CheckoutMutation"))
+                .AddTypeExtension<PaymentsMutation>()
+                .AddRemoteSchema(Orders);
 
             services.AddSingleton<IMongoClient>(new MongoClient("mongodb://127.0.0.1:8069"));
             services.AddSingleton<IMongoDatabase>(s =>
@@ -32,6 +42,8 @@ namespace CheckoutService
             services.AddSingleton<PaymentsRepository>();
 
             services.AddScoped<PaymentsResolver>();
+            
+            services.AddHttpClient();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -47,7 +59,10 @@ namespace CheckoutService
             app.UseRouting();
 
 
-            app.UseEndpoints(endpoints => { endpoints.MapGraphQL(); });
+            app.UseEndpoints(endpoints =>
+            {
+                endpoints.MapGraphQL();
+            });
         }
     }
 }

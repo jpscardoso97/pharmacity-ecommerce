@@ -1,0 +1,23 @@
+{
+  orders(ids: "ORD-0;ORD-1;ORD-2;ORD-3;ORD-4"){
+    id
+    deliveryId
+    date
+    paymentId
+    status{
+      date
+      value
+    }
+    value
+    ... on PrescriptionOrder{
+      prescriptionId
+    }
+    ... on ProductsOrder{
+      items{
+        price
+        productId
+        quantity
+      }
+    }
+  }
+}
