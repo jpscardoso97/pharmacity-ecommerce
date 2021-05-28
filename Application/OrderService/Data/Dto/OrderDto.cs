@@ -9,6 +9,10 @@
         public ObjectId Id { get; set; }
 
         public string OrderId { get; set; }
+        
+        public string CustomerId { get; set; }
+        
+        public string AddressId { get; set; }
 
         public string Value { get; set; }
 

@@ -41,11 +41,11 @@
             string prescriptionId,
             string cartId,
             string customerId,
+            string addressId,
             string paymentInfoId,
-            string orderId,
             string amount)
         {
-            if (!ValidPayment(customerId, paymentInfoId, orderId, amount))
+            if (!ValidPayment(customerId, addressId, paymentInfoId, cartId, amount))
             {
                 throw new ArgumentException("Invalid payment provided");
             }
@@ -69,19 +69,18 @@
                 if (orderItems == null)
                     throw new ArgumentException("Invalid request");
 
-                response = await ProcessProductsOrder(orderItems, mutationResult.Amount, mutationResult.PaymentId);
+                response = await ProcessProductsOrder(orderItems, mutationResult.Amount, mutationResult.PaymentId,
+                    cartId, customerId, addressId);
             }
             else
             {
                 response = await ProcessPrescriptionOrder(prescriptionId, mutationResult.Amount,
-                    mutationResult.PaymentId);
+                    mutationResult.PaymentId, cartId, customerId, addressId);
             }
 
             if (!response.IsSuccessStatusCode)
                 throw new ApplicationException("Error creating order");
 
-            
-            
             return new Payment
             {
                 Id = mutationResult.PaymentId,
@@ -91,41 +90,64 @@
             };
         }
 
-        private bool ValidPayment(string customerId, string paymentInfoId, string orderId, string amount) =>
+        private bool ValidPayment(string customerId, string addressId, string paymentInfoId, string cartId, string amount) =>
             !string.IsNullOrWhiteSpace(customerId) &&
+            !string.IsNullOrWhiteSpace(addressId) &&
             !string.IsNullOrWhiteSpace(paymentInfoId) &&
-            !string.IsNullOrWhiteSpace(orderId) &&
+            !string.IsNullOrWhiteSpace(cartId) &&
             !string.IsNullOrWhiteSpace(amount);
 
-        private async Task<HttpResponseMessage> ProcessProductsOrder(IEnumerable<OrderItem> items, string value,
-            string paymentId)
+        private async Task<HttpResponseMessage> ProcessProductsOrder(
+            IEnumerable<OrderItem> items, 
+            string value,
+            string paymentId, 
+            string cartId,
+            string customerId,
+            string addressId)
         {
-            var request = JsonConvert.SerializeObject(new ProductsOrder
+            var request = JsonConvert.SerializeObject(new
             {
-                Value = value,
-                PaymentId = paymentId,
-                Items = items
+                Order = new ProductsOrder
+                {
+                    Value = value,
+                    PaymentId = paymentId,
+                    Items = items,
+                    CustomerId = customerId,
+                    AddressId = addressId
+                },
+                CartId = cartId
             });
 
             var client = new HttpClient();
-            
+
             return await client.PostAsync(
                 new Uri("https://localhost:6004/api/orders/products"),
                 new StringContent(request, Encoding.UTF8, "application/json"));
-
         }
 
-        private async Task<HttpResponseMessage> ProcessPrescriptionOrder(string prescriptionId, string value,
-            string paymentId)
+        private async Task<HttpResponseMessage> ProcessPrescriptionOrder(
+            string prescriptionId, 
+            string value,
+            string paymentId, 
+            string cartId,
+            string customerId,
+            string addressId)
         {
-            var request = JsonConvert.SerializeObject(new PrescriptionOrder
+            var request = JsonConvert.SerializeObject(new
             {
-                Value = value,
-                PaymentId = paymentId,
-                PrescriptionId = prescriptionId
+                Order = new PrescriptionOrder
+                {
+                    Value = value,
+                    PaymentId = paymentId,
+                    PrescriptionId = prescriptionId,
+                    CustomerId = customerId,
+                    AddressId = addressId
+                },
+                CartId = cartId
             });
-            var client = new HttpClient();
             
+            var client = new HttpClient();
+
             return await client.PostAsync(
                 new Uri("https://localhost:6004/api/orders/prescription"),
                 new StringContent(request, Encoding.UTF8, "application/json"));

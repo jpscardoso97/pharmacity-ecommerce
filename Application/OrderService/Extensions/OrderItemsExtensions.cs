@@ -8,7 +8,6 @@
     {
         public static OrderItemDto ToDto(this OrderItem order) => new OrderItemDto
         {
-            Price = order.Price,
             Quantity = order.Quantity,
             ProductId = order.ProductId
         };

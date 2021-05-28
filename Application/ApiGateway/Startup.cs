@@ -53,7 +53,7 @@ namespace ApiGateway
                 .AddRemoteSchema(Customers)
                 .AddRemoteSchema(Orders)
                 .AddRemoteSchema(Prescriptions)
-                .AddRemoteSchema(Checkout, true)
+                .AddRemoteSchema(Checkout)
                 .AddRemoteSchema(Carts)
                 .AddTypeExtensionsFromFile("./Stitching.graphql");
         }

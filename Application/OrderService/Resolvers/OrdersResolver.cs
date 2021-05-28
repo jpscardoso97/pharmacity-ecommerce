@@ -60,7 +60,6 @@
                     Items = order.Items.Select(itemDto => new OrderItem
                     {
                         ProductId = itemDto.ProductId,
-                        Price = itemDto.Price,
                         Quantity = itemDto.Quantity
                     }).ToArray(),
                     Status = order.Status.Select(o => new OrderStatus

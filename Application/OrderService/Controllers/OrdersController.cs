@@ -5,6 +5,7 @@ namespace OrderService.Controllers
     using System;
     using System.Threading.Tasks;
     using Newtonsoft.Json;
+    using OrderService.InputTypes;
     using OrderService.Models;
     using OrderService.QueryHandlers;
 
@@ -20,11 +21,11 @@ namespace OrderService.Controllers
         }
         
         [HttpPost("products")]
-        public async Task<IActionResult> CreateProductsOrder([FromBody] ProductsOrder order)
+        public async Task<IActionResult> CreateProductsOrder([FromBody] NewProductsOrderInput order)
         {
             try
             {
-                return Ok(JsonConvert.SerializeObject(await _queryHandler.CreateProductsOrder(order)));
+                return Ok(JsonConvert.SerializeObject(await _queryHandler.CreateProductsOrder(order.Order, order.CartId)));
             }
             catch (Exception e)
             {
@@ -35,11 +36,11 @@ namespace OrderService.Controllers
         
         [HttpPost]
         [Route("prescription")]
-        public async Task<IActionResult> CreatePrescriptionOrder([FromBody] PrescriptionOrder order)
+        public async Task<IActionResult> CreatePrescriptionOrder([FromBody] NewPrescriptionOrderInput order)
         {
             try
             {
-                return Ok(JsonConvert.SerializeObject(await _queryHandler.CreatePrescriptionOrder(order)));
+                return Ok(JsonConvert.SerializeObject(await _queryHandler.CreatePrescriptionOrder(order.Order, order.CartId)));
             }
             catch (Exception e)
             {

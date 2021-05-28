@@ -29,19 +29,16 @@
                     new()
                     {
                         ProductId = "0",
-                        Price = f.Commerce.Price(),
                         Quantity = f.Random.Int(1, 3).ToString()
                     },
                     new()
                     {
                         ProductId = "3",
-                        Price = f.Commerce.Price(),
                         Quantity = f.Random.Int(1, 3).ToString()
                     },
                     new()
                     {
                         ProductId = "4",
-                        Price = f.Commerce.Price(),
                         Quantity = f.Random.Int(1, 3).ToString()
                     }
                 };

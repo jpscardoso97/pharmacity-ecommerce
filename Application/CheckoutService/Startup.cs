@@ -31,8 +31,7 @@ namespace CheckoutService
                 .AddQueryType(d => d.Name("CheckoutQuery"))
                 .AddTypeExtension<PaymentsQuery>()
                 .AddMutationType(d => d.Name("CheckoutMutation"))
-                .AddTypeExtension<PaymentsMutation>()
-                .AddRemoteSchema(Orders);
+                .AddTypeExtension<PaymentsMutation>();
 
             services.AddSingleton<IMongoClient>(new MongoClient("mongodb://127.0.0.1:8069"));
             services.AddSingleton<IMongoDatabase>(s =>

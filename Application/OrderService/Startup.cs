@@ -1,5 +1,6 @@
 namespace OrderService
 {
+    using Crosscutting.MessageBroker;
     using Microsoft.AspNetCore.Builder;
     using Microsoft.AspNetCore.Hosting;
     using Microsoft.Extensions.Configuration;
@@ -40,6 +41,8 @@ namespace OrderService
 
             services.AddScoped<OrdersResolver>();
             services.AddScoped<OrderCreationQueryHandler>();
+
+            services.AddSingleton<RabbitMQClient>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -60,5 +63,7 @@ namespace OrderService
                 endpoints.MapControllers();
             });
         }
+
+        
     }
 }

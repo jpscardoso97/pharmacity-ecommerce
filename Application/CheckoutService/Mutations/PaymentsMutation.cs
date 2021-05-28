@@ -15,11 +15,11 @@
         public async Task<Payment> CheckoutCart(
             [Service] PaymentsResolver resolver,
             string cartId,
+            string addressId,
             string prescriptionId,
             string productIds,
             string customerId,
             string paymentInfoId,
-            string orderId,
             string amount)
         {
             var orderItems = !string.IsNullOrWhiteSpace(productIds)
@@ -31,7 +31,7 @@
                 Price = "",
                 Quantity = "1",
                 ProductId = o
-            }), prescriptionId, cartId, customerId, paymentInfoId, orderId, amount);
+            }), prescriptionId, cartId, customerId, addressId, paymentInfoId, amount);
         }
     }
 }

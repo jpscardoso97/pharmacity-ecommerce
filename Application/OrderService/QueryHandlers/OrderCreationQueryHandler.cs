@@ -6,6 +6,7 @@
     using System.Threading;
     using System.Threading.Tasks;
     using Crosscutting.Helpers;
+    using Crosscutting.MessageBroker;
     using OrderService.Data;
     using OrderService.Data.Dto;
     using OrderService.Extensions;
@@ -16,13 +17,15 @@
     public class OrderCreationQueryHandler
     {
         private readonly OrdersRepository _repository;
+        private readonly RabbitMQClient _messageBrokerClient;
 
-        public OrderCreationQueryHandler(OrdersRepository repository)
+        public OrderCreationQueryHandler(OrdersRepository repository,RabbitMQClient messageBrokerClient)
         {
             _repository = repository;
+            _messageBrokerClient = messageBrokerClient;
         }
 
-        public async Task<ProductsOrder> CreateProductsOrder(ProductsOrder order)
+        public async Task<ProductsOrder> CreateProductsOrder(ProductsOrder order, string cartId)
         {
             if (!ValidateOrder(order))
             {
@@ -37,10 +40,12 @@
             if (mutationResult == null)
                 return default;
 
+            //TODO trigger order registered message
+            
             return OrdersResolver.GetTypedOrder(mutationResult) as ProductsOrder;
         }
 
-        public async Task<PrescriptionOrder> CreatePrescriptionOrder(PrescriptionOrder order)
+        public async Task<PrescriptionOrder> CreatePrescriptionOrder(PrescriptionOrder order, string cartId)
         {
             if (!ValidateOrder(order))
             {
@@ -55,6 +60,11 @@
             if (mutationResult == null)
                 return default;
 
+            //TODO trigger order registered message
+            _messageBrokerClient.PushMessage("", new
+            {
+                OrderId
+            });
 
             return OrdersResolver.GetTypedOrder(mutationResult) as PrescriptionOrder;
         }

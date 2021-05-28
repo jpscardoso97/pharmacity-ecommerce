@@ -1,0 +1,29 @@
+mutation {
+  checkoutCart(
+    amount:"12", 
+    cartId:"CRT-1",
+     customerId:"CST-1",
+      paymentInfoId: "PAYER-2",
+      prescriptionId:"0000000001"){
+        id
+        amount
+        customerId
+        date
+        paymentInfoId
+      }
+}
+
+mutation {
+  checkoutCart(
+    amount:"12", 
+    cartId:"CRT-1",
+     customerId:"CST-1",
+      paymentInfoId: "PAYER-2",
+      productIds:"123;231"){
+        id
+        amount
+        customerId
+        date
+        paymentInfoId
+      }
+}
