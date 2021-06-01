@@ -1,0 +1,41 @@
+@startuml
+
+skinparam monochrome true
+
+title Application Status Monitoring Solution
+participant Client as client
+participant APIGateway as api
+participant CustomerService as cs
+participant ProductsService as ps
+participant ShoppingCartService as scs
+participant CheckoutService as checkout
+participant OrdersService as os
+participant DeliveriesService as ds
+
+client->api: GET /status/check
+note over client, api: { \n.   overview{\n.       services{ \n.           name, \n.           status, \n.           failures{ \n.              dependency, \n               error\n            }\n.       }\n   }\n}
+
+api->cs: Status Query /graphql/
+note over cs: { \n.   status{\n.       code: "200", \n.       failures{ \n.           dependency, \n.           error\n.       }\n   }\n}
+cs-->api: Status
+
+api->ps: Status Query /graphql/
+note over ps: { \n.   status{\n.       code: "500", \n.       failures{ \n.           dependency: "Database", \n.           error: "Couldn't connect to database"\n.       }\n   }\n}
+ps-->api: Status
+
+api->scs: Status Query /graphql/
+note over scs: { \n.   status{\n.       code: "200", \n.       failures{ \n.           dependency: null, \n.           error: null\n.       }\n   }\n}
+scs-->api: Status
+
+api->os: Status Query /graphql/
+note over os: { \n.   status{\n.       code: "200", \n.       failures{ \n.           dependency, \n.           error\n.       }\n   }\n}
+os-->api: Status
+
+api->ds: Status Query /graphql/
+note over ds: { \n.   status{\n.       code: "200", \n.       failures{ \n.           dependency, \n.           error\n.       }\n   }\n}
+ds-->api: Status
+
+api-->client: Status Overview
+note over client, api: { \n.   overview{\n.       services: [            \n             { \n.                 name:"customers-service", \n.                 status:"200", \n.                 failures: null\n.             },\n             { \n.                 name:"products-service", \n.                 status:"500", \n.                 failures{ \n.                    dependency: "Database", \n.                    error: "Couldn't connect to database"\n.                }\n.            },\n             { \n.                 name:"carts-service", \n.                 status:"200", \n.                 failures: null\n.             },\n             ... every other service\n        ]\n.  }\n}
+
+@enduml
