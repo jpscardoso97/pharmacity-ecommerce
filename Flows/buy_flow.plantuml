@@ -1,0 +1,53 @@
+@startuml
+
+title Buy Flow
+actor Customer
+participant PharmacityApp as app
+participant APIGateway as api
+
+participant CustomerService as cs
+participant ProductsService as ps
+participant ShoppingCartService as scs
+participant CheckoutService as checkout
+participant OrdersService as os
+participant DeliveriesService as ds
+participant MessageBroker as broker
+
+Customer->app: Login
+app->api: Get customer info 
+api->cs: Get customer
+cs-->api: Customer Info
+api-->app: Customer Info
+app->Customer: Login Successful
+
+Customer->app: Browse products
+app->api: GetProducts
+api->ps: GetProducts
+ps-->api: Products
+api-->app: Products
+app-->Customer: Show products
+
+Customer->app: Add product to cart
+app->api: Add to Cart
+api->scs: AddItem
+scs-->api: Item added
+api-->app: Item added
+app-->Customer: Item added
+
+Customer->app: Checkout cart
+app->api: Checkout
+api->checkout: Checkout
+checkout->checkout: CreatePayment
+checkout->os: CreateOrder
+os->broker: OrderRegistered
+
+os-->checkout: OrderComplete
+checkout-->api: OrderComplete
+api-->app: OrderComplete
+app-->Customer: Order successful
+
+broker->ds: CreateDelivery
+ds->os: AddDeliveryInfo
+broker->scs: ClearCart
+
+@enduml
