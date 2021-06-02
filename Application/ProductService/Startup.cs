@@ -10,6 +10,9 @@ using ProductService.Resolvers;
 
 namespace ProductService
 {
+    using MongoDB.Driver;
+    using ProductService.Data.Dto;
+
     public class Startup
     {
         public Startup(IConfiguration configuration)
@@ -25,9 +28,11 @@ namespace ProductService
             services
                 .AddGraphQLServer()
                 .AddQueryType<ProductsQuery>();
-
-            services.AddDbContext<ApplicationDbContext>(
-                options => options.UseSqlite("Data Source=database.db"));
+            
+            services.AddSingleton<IMongoClient>(new MongoClient("mongodb://127.0.0.1:8069"));
+            services.AddSingleton<IMongoDatabase>(s => s.GetRequiredService<IMongoClient>().GetDatabase("ProductsDB"));
+            services.AddSingleton<IMongoCollection<ProductDto>>(s => s.GetRequiredService<IMongoDatabase>().GetCollection<ProductDto>("products"));
+            services.AddSingleton<ProductsRepository>();
 
             services.AddScoped<ProductsResolver>();
         }

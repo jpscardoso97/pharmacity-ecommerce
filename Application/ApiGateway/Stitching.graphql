@@ -6,12 +6,15 @@
   customers:[Customer] @delegate(schema: "customers")
   cart(cartId:String):Cart @delegate(schema: "carts")
   addresses(ids:String):Address @delegate(schema: "customers")
+  orders(ids:String):[Order] @delegate(schema: "orders")
+  orderById(id:String):[Order] @delegate(schema: "orders")
 }
 
 extend type LocalMutation {
   addItemToCart(cartId:String, productId:String):Cart @delegate(schema: "carts")
   checkoutCart(
     cartId:String, 
+    addressId: String,
     prescriptionId:String,
     productIds:String,
     customerId:String,

@@ -50,5 +50,7 @@ namespace ShoppingCartService.Resolvers
                 ProductIds = DataTransferHelper.IdsToString(mutationResult.ProductIds)
             };
         }
+
+        public async Task ClearCart(string cartId) => await _repository.ClearCart(cartId, CancellationToken.None);
     }
 }

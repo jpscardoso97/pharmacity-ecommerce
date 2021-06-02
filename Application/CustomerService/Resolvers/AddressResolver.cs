@@ -1,9 +1,12 @@
 namespace CustomerService.Resolvers
 {
+    using System.Collections;
+    using System.Collections.Generic;
     using System.Linq;
     using System.Threading.Tasks;
     using Crosscutting.Helpers;
     using CustomerService.Data;
+    using CustomerService.Data.Dto;
     using CustomerService.Models;
 
     public class AddressResolver
@@ -18,29 +21,26 @@ namespace CustomerService.Resolvers
         public async Task<Address> Address(string id)
         {
             var queryResult = await _repository.GetAddressAsync(id, default);
-            return queryResult != null ? new Address
-            {
-                Id = queryResult.AddressId,
-                City = queryResult.City,
-                Country = queryResult.Country,
-                Phone = queryResult.Phone,
-                DeliveryAddress = queryResult.DeliveryAddress,
-                ZipCode = queryResult.ZipCode
-            } : default;
+            return queryResult != null ? FromDto(queryResult) : default;
         }
 
-        public IQueryable<Address> Addresses(string ids)
+        public IEnumerable<Address> Addresses(string ids)
         {
             var addressIds = DataTransferHelper.IdsFromString(ids);
-            return _repository.GetAddresses().Where(a => addressIds.Contains(a.AddressId)).Select(c => new Address
-            {
-                Id = c.AddressId,
-                City = c.City,
-                Country = c.Country,
-                Phone = c.Phone,
-                DeliveryAddress = c.DeliveryAddress,
-                ZipCode = c.ZipCode
-            });
+            return _repository.GetAddresses()
+                .ToList()
+                .Where(a => addressIds.Contains(a.AddressId))
+                .Select(FromDto);
         }
+
+        private Address FromDto(AddressDto addressDto) => new()
+        {
+            Id = addressDto.AddressId,
+            City = addressDto.City,
+            Country = addressDto.Country,
+            Phone = addressDto.Phone,
+            DeliveryAddress = addressDto.DeliveryAddress,
+            ZipCode = addressDto.ZipCode
+        };
     }
 }

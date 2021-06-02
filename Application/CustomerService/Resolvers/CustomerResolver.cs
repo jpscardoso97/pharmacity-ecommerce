@@ -1,5 +1,7 @@
 namespace CustomerService.Resolvers
 {
+    using System.Collections;
+    using System.Collections.Generic;
     using System.Linq;
     using System.Threading.Tasks;
     using Crosscutting.Helpers;
@@ -31,9 +33,11 @@ namespace CustomerService.Resolvers
             } : default;
         }
 
-        public IQueryable<Customer> Customers()
+        public IEnumerable<Customer> Customers()
         {
-            return _repository.GetCustomers().Select(c => new Customer
+            return _repository.GetCustomers()?
+                .ToList()
+                .Select(c => new Customer
             {
                 Id = c.CustomerId,
                 CartId = c.CartId,

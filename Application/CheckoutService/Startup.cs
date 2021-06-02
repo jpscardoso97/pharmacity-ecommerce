@@ -35,7 +35,7 @@ namespace CheckoutService
 
             services.AddSingleton<IMongoClient>(new MongoClient("mongodb://127.0.0.1:8069"));
             services.AddSingleton<IMongoDatabase>(s =>
-                s.GetRequiredService<IMongoClient>().GetDatabase("PharmacityDB"));
+                s.GetRequiredService<IMongoClient>().GetDatabase("PaymentsDB"));
             services.AddSingleton<IMongoCollection<PaymentDto>>(s =>
                 s.GetRequiredService<IMongoDatabase>().GetCollection<PaymentDto>("payments"));
             services.AddSingleton<PaymentsRepository>();

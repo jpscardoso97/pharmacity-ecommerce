@@ -35,7 +35,7 @@ namespace OrderService
                 .AddTypeExtension<OrdersQuery>();
             
             services.AddSingleton<IMongoClient>(new MongoClient("mongodb://127.0.0.1:8069"));
-            services.AddSingleton<IMongoDatabase>(s => s.GetRequiredService<IMongoClient>().GetDatabase("PharmacityDB"));
+            services.AddSingleton<IMongoDatabase>(s => s.GetRequiredService<IMongoClient>().GetDatabase("OrdersDB"));
             services.AddSingleton<IMongoCollection<OrderDto>>(s => s.GetRequiredService<IMongoDatabase>().GetCollection<OrderDto>("orders"));
             services.AddSingleton<OrdersRepository>();
 

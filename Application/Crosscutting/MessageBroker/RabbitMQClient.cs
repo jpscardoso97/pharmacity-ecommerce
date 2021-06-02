@@ -40,7 +40,7 @@
                 body: body);
         }
         
-        public void Subscribe(string message)
+        public void Subscribe()
         {
             var consumer = new EventingBasicConsumer(_channel);
             consumer.Received += (model, ea) =>
@@ -49,7 +49,7 @@
                 var message = Encoding.UTF8.GetString(body);
                 Console.WriteLine(" [x] Received {0}", message);
             };
-            _channel.BasicConsume(queue: "hello",
+            _channel.BasicConsume(queue: "message",
                 autoAck: true,
                 consumer: consumer);
         }

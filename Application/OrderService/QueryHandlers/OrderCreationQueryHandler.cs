@@ -19,7 +19,7 @@
         private readonly OrdersRepository _repository;
         private readonly RabbitMQClient _messageBrokerClient;
 
-        public OrderCreationQueryHandler(OrdersRepository repository,RabbitMQClient messageBrokerClient)
+        public OrderCreationQueryHandler(OrdersRepository repository, RabbitMQClient messageBrokerClient)
         {
             _repository = repository;
             _messageBrokerClient = messageBrokerClient;
@@ -61,9 +61,10 @@
                 return default;
 
             //TODO trigger order registered message
-            _messageBrokerClient.PushMessage("", new
+            _messageBrokerClient.PushMessage("order.created", new
             {
-                OrderId
+                mutationResult.OrderId,
+                CartId = cartId
             });
 
             return OrdersResolver.GetTypedOrder(mutationResult) as PrescriptionOrder;

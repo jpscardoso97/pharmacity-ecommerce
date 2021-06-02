@@ -8,6 +8,7 @@ namespace ShoppingCartService
     using MongoDB.Driver;
     using ShoppingCartService.Data;
     using ShoppingCartService.Data.Dto;
+    using ShoppingCartService.Messaging;
     using ShoppingCartService.Mutations;
     using ShoppingCartService.Queries;
     using ShoppingCartService.Resolvers;
@@ -32,12 +33,13 @@ namespace ShoppingCartService
                 .AddTypeExtension<CartMutations>();
             
             services.AddSingleton<IMongoClient>(new MongoClient("mongodb://127.0.0.1:8069"));
-            services.AddSingleton<IMongoDatabase>(s => s.GetRequiredService<IMongoClient>().GetDatabase("PharmacityDB"));
+            services.AddSingleton<IMongoDatabase>(s => s.GetRequiredService<IMongoClient>().GetDatabase("CartsDB"));
             services.AddSingleton<IMongoCollection<CartDto>>(s => s.GetRequiredService<IMongoDatabase>().GetCollection<CartDto>("carts"));
             services.AddSingleton<CartsRepository>();
 
             services.AddScoped<CartResolver>();
-
+           
+            services.AddHostedService<OrderCreationListener>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

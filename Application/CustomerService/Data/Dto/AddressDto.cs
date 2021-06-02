@@ -1,8 +1,10 @@
 ﻿namespace CustomerService.Data.Dto
 {
+    using MongoDB.Bson;
+
     public class AddressDto
     { 
-        public int Id { get; set; }
+        public ObjectId Id { get; set; }
 
         public string AddressId { get; set; }
 

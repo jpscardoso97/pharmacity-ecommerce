@@ -21,8 +21,7 @@
         }
 
         public static IEnumerable<AddressDto> Data => new Faker<AddressDto>()
-            .RuleFor(a => a.Id, f => f.UniqueIndex)
-            .RuleFor(a => a.AddressId, (f, a) => GenerateAddressId(a.Id))
+            .RuleFor(a => a.AddressId, (f, a) => GenerateAddressId(f.UniqueIndex))
             .RuleFor(a => a.DeliveryAddress, f => f.Address.StreetName())
             .RuleFor(a => a.City, f => f.Address.City())
             .RuleFor(a => a.Country, f => f.Address.Country())

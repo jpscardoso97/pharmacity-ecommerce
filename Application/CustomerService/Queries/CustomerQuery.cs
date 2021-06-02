@@ -1,5 +1,7 @@
 namespace CustomerService.Queries
 {
+    using System.Collections;
+    using System.Collections.Generic;
     using System.Linq;
     using System.Threading.Tasks;
     using CustomerService.Models;
@@ -8,7 +10,7 @@ namespace CustomerService.Queries
 
     public class CustomerQuery
     {
-        public IQueryable<Customer> GetCustomers([Service] CustomerResolver resolver)
+        public IEnumerable<Customer> GetCustomers([Service] CustomerResolver resolver)
         {
             return resolver.Customers();
         }
@@ -18,7 +20,7 @@ namespace CustomerService.Queries
             return await resolver.Customer(id);
         }
         
-        public IQueryable<Address> GetAddresses([Service] AddressResolver resolver, string ids)
+        public IEnumerable<Address> GetAddresses([Service] AddressResolver resolver, string ids)
         {
             return resolver.Addresses(ids);
         }

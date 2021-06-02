@@ -14,7 +14,7 @@
         public IEnumerable<IOrder> GetOrders([Service] OrdersResolver resolver, string ids)
         {
             if (string.IsNullOrWhiteSpace(ids))
-                throw new ArgumentException("Requested invalid order ids");
+                return new List<IOrder>();
             
             return resolver.GetOrders(ids);
         }

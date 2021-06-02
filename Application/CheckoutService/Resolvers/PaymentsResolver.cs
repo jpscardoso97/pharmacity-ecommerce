@@ -45,7 +45,7 @@
             string paymentInfoId,
             string amount)
         {
-            if (!ValidPayment(customerId, addressId, paymentInfoId, cartId, amount))
+            if (!ValidPayment(prescriptionId, customerId, addressId, paymentInfoId, cartId, amount))
             {
                 throw new ArgumentException("Invalid payment provided");
             }
@@ -90,11 +90,11 @@
             };
         }
 
-        private bool ValidPayment(string customerId, string addressId, string paymentInfoId, string cartId, string amount) =>
+        private bool ValidPayment(string prescriptionId, string customerId, string addressId, string paymentInfoId, string cartId, string amount) =>
             !string.IsNullOrWhiteSpace(customerId) &&
             !string.IsNullOrWhiteSpace(addressId) &&
             !string.IsNullOrWhiteSpace(paymentInfoId) &&
-            !string.IsNullOrWhiteSpace(cartId) &&
+            (!string.IsNullOrWhiteSpace(prescriptionId) || !string.IsNullOrWhiteSpace(cartId)) &&
             !string.IsNullOrWhiteSpace(amount);
 
         private async Task<HttpResponseMessage> ProcessProductsOrder(

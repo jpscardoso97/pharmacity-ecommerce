@@ -8,12 +8,12 @@
         
         public static string IdsToString(IList<string> productIds)
         {
-            return string.Join(SplitCharacter, productIds);
+            return productIds != null ? string.Join(SplitCharacter, productIds) : default;
         }
         
         public static IList<string> IdsFromString(string productIdsString)
         {
-            return productIdsString.Split(SplitCharacter);
+            return productIdsString?.Split(SplitCharacter);
         }
     }
 }

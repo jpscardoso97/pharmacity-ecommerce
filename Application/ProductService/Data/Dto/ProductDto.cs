@@ -3,12 +3,11 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace ProductService.Data.Dto
 {
-    [Table("Products")]
+    using MongoDB.Bson;
+
     public class ProductDto
     {
-        [Key]
-        [DatabaseGenerated(DatabaseGeneratedOption.None)]
-        public int Id { get; set; }
+        public ObjectId Id { get; set; }
         
         public string ProductId { get; set; }
 

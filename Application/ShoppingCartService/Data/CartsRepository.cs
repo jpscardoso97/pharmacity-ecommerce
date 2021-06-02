@@ -1,6 +1,7 @@
 ﻿namespace ShoppingCartService.Data
 {
     using System;
+    using System.Collections.Generic;
     using System.Linq;
     using System.Threading;
     using System.Threading.Tasks;
@@ -39,6 +40,12 @@
                 Builders<CartDto>.Update.AddToSet(c => c.ProductIds, productId), cancellationToken: cancellationToken);
 
             return await GetCartAsync(cartId, cancellationToken);
+        }
+
+        public async Task ClearCart(string cartId, CancellationToken cancellationToken)
+        {
+            await _cartsCollection.UpdateOneAsync(c => c.CartId == cartId,
+                Builders<CartDto>.Update.Set(c => c.ProductIds, new List<string>()), cancellationToken: cancellationToken);
         }
     }
 }

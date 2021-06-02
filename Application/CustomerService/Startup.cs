@@ -30,7 +30,7 @@ namespace CustomerService
                 .AddQueryType<CustomerQuery>();
             
             services.AddSingleton<IMongoClient>(new MongoClient("mongodb://127.0.0.1:8069"));
-            services.AddSingleton<IMongoDatabase>(s => s.GetRequiredService<IMongoClient>().GetDatabase("PharmacityDB"));
+            services.AddSingleton<IMongoDatabase>(s => s.GetRequiredService<IMongoClient>().GetDatabase("CustomersDB"));
             services.AddSingleton<IMongoCollection<CustomerDto>>(s => s.GetRequiredService<IMongoDatabase>().GetCollection<CustomerDto>("customers"));
             services.AddSingleton<IMongoCollection<AddressDto>>(s => s.GetRequiredService<IMongoDatabase>().GetCollection<AddressDto>("addresses"));
             services.AddSingleton<CustomersRepository>();
