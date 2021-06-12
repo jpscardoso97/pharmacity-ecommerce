@@ -12,25 +12,31 @@ participant CheckoutService as checkout
 participant OrdersService as os
 participant DeliveriesService as ds
 
+note over api: {"headers": [ {"transactionId": "01244", ...}]}
 client->api: GET /status/check
 note over client, api: { \n.   overview{\n.       services{ \n.           name, \n.           status, \n.           failures{ \n.              dependency, \n               error\n            }\n.       }\n   }\n}
 
+note over cs: {"headers": [ {"transactionId": "01244", ...}]}
 api->cs: Status Query /graphql/
 note over cs: { \n.   status{\n.       code: "200", \n.       failures{ \n.           dependency, \n.           error\n.       }\n   }\n}
 cs-->api: Status
 
+note over ps: {"headers": [ {"transactionId": "01244", ...}]}
 api->ps: Status Query /graphql/
 note over ps: { \n.   status{\n.       code: "500", \n.       failures{ \n.           dependency: "Database", \n.           error: "Couldn't connect to database"\n.       }\n   }\n}
 ps-->api: Status
 
+note over scs: {"headers": [ {"transactionId": "01244", ...}]}
 api->scs: Status Query /graphql/
 note over scs: { \n.   status{\n.       code: "200", \n.       failures{ \n.           dependency: null, \n.           error: null\n.       }\n   }\n}
 scs-->api: Status
 
+note over os: {"headers": [ {"transactionId": "01244", ...}]}
 api->os: Status Query /graphql/
 note over os: { \n.   status{\n.       code: "200", \n.       failures{ \n.           dependency, \n.           error\n.       }\n   }\n}
 os-->api: Status
 
+note over ds: {"headers": [ {"transactionId": "01244", ...}]}
 api->ds: Status Query /graphql/
 note over ds: { \n.   status{\n.       code: "200", \n.       failures{ \n.           dependency, \n.           error\n.       }\n   }\n}
 ds-->api: Status
